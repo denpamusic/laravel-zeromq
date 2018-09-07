@@ -63,5 +63,4 @@ class Broadcaster extends IlluminateBroadcaster
     {
         $this->connection->publish($channels, $payload);
     }
-
 }

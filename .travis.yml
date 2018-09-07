@@ -8,6 +8,9 @@ php:
   - 7.2
   - hhvm
 
+before_install:
+  - sudo apt-get install -y libzmq3-dev libsodium-dev
+
 before_script:
   - echo "extension = zmq.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
