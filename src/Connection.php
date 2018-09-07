@@ -78,7 +78,7 @@ class Connection
         $pub = $socket->bind($this->getDsn());
 
         foreach ($channels as $channel) {
-            $pub->send([$channel, $message]);
+            $pub->sendmulti([$channel, $message]);
         }
     }
 
