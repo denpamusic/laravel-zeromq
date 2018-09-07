@@ -75,8 +75,6 @@ class Connection
     {
         $socket = $this->context->getSocket(ZMQ::SOCKET_PUB);
         $socket->bind($this->getDsn())->send($message);
-
-        $this->loop->run();
     }
 
     /**
@@ -103,8 +101,6 @@ class Connection
     {
         $socket = $this->context->getSocket(ZMQ::SOCKET_PUSH);
         $socket->connect($this->getDsn())->send($message);
-
-        $this->loop->run();
     }
 
     /**
