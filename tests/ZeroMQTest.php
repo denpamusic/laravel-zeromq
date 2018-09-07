@@ -1,9 +1,8 @@
 <?php
 
-use Orchestra\Testbench\TestCase;
-
 use Denpa\ZeroMQ\Manager;
 use Denpa\ZeroMQ\Connection;
+use Orchestra\Testbench\TestCase;
 
 class ZeroMQTest extends TestCase
 {

@@ -2,7 +2,6 @@
 
 namespace Denpa\ZeroMQ;
 
-use Denpa\ZeroMQ\Connection;
 use Illuminate\Broadcasting\Broadcasters\Broadcaster as IlluminateBroadcaster;
 
 class Broadcaster extends IlluminateBroadcaster
