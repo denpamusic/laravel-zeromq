@@ -2,14 +2,12 @@
 
 if (! function_exists('zeromq')) {
     /**
-     * Get ZeroMQ connection by name.
-     *
-     * @param  string  $name
+     * Get ZeroMQ connection manager.
      *
      * @return \Denpa\ZeroMQ\Connections\Connection
      */
-    function zeromq($name = 'default')
+    function zeromq()
     {
-        return app('zeromq')->get($name);
+        return app('zeromq');
     }
 }

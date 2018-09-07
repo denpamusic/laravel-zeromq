@@ -33,7 +33,7 @@ class Broadcaster extends IlluminateBroadcaster
      *
      * @return mixed
      */
-    public function auth()
+    public function auth($request)
     {
         //
     }
@@ -60,7 +60,7 @@ class Broadcaster extends IlluminateBroadcaster
      *
      * @return void
      */
-    public function broadcast(array $channels, $event, $payload = [])
+    public function broadcast(array $channels, $event, array $payload = [])
     {
         $this->connection->publish($channels, $payload);
     }
