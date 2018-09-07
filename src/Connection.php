@@ -71,10 +71,15 @@ class Connection
      *
      * @return void
      */
-    public function publish($message)
+    public function publish(array $channels, $message)
     {
         $socket = $this->context->getSocket(ZMQ::SOCKET_PUB);
-        $socket->bind($this->getDsn())->send($message);
+
+        $pub = $socket->bind($this->getDsn());
+
+        foreach ($channels as $channel) {
+            $pub->send([$channel, $message]);
+        }
     }
 
     /**
