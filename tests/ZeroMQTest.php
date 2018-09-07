@@ -2,6 +2,7 @@
 
 use Denpa\ZeroMQ\Manager;
 use Denpa\ZeroMQ\Connection;
+use Denpa\ZeroMQ\Broadcaster;
 use Orchestra\Testbench\TestCase;
 
 class ZeroMQTest extends TestCase
@@ -61,6 +62,8 @@ class ZeroMQTest extends TestCase
     {
         $this->assertTrue($this->app->bound('zeromq'));
         $this->assertTrue($this->app->bound('zeromq.connection'));
+        $this->assertInstanceOf(Manager::class, $this->app['zeromq']);
+        $this->assertInstanceOf(Connection::class, $this->app['zeromq.connection']);
     }
 
     /**
@@ -83,5 +86,41 @@ class ZeroMQTest extends TestCase
     {
         $this->assertInstanceOf(Manager::class, zeromq());
         $this->assertInstanceOf(Connection::class, zeromq()->connection());
+    }
+
+    /**
+     * Test nonexistent configuration.
+     *
+     * @return void
+     */
+    public function testNonexistentConfiguration()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Could not find connection configuration [nonexistent]');
+
+        zeromq()->connection('nonexistent')->getLoop();
+    }
+
+    /**
+     * Test magic calls to default connection through manager.
+     *
+     * @return void
+     */
+    public function testMagicCall()
+    {
+        $loop = zeromq()->getLoop();
+
+        $this->assertInstanceOf(\React\EventLoop\LoopInterface::class, $loop);
+    }
+
+    public function testBroadcasterExtension()
+    {
+        config()->set('broadcasting.default', 'zeromq');
+        config()->set('broadcasting.connections.zeromq.driver', 'zeromq');
+
+        $this->assertInstanceOf(
+            Broadcaster::class,
+            $this->app['Illuminate\Contracts\Broadcasting\Factory']->driver()
+        );
     }
 }

@@ -67,19 +67,18 @@ class Connection
     /**
      * Publishes message.
      *
+     * @param  string $channel
      * @param  mixed  $message
      *
      * @return void
      */
-    public function publish(array $channels, $message)
+    public function publish($channel, $message)
     {
         $socket = $this->context->getSocket(ZMQ::SOCKET_PUB);
 
         $pub = $socket->bind($this->getDsn());
 
-        foreach ($channels as $channel) {
-            $pub->sendmulti([$channel, $message]);
-        }
+        $pub->sendmulti([$channel, $message]);
     }
 
     /**

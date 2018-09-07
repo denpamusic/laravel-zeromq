@@ -21,8 +21,8 @@ class ServiceProvider extends IlluminateServiceProvider
         $this->mergeConfigFrom($path, 'zeromq');
 
         $this->app->make('Illuminate\Contracts\Broadcasting\Factory')
-            ->extend('zmq', function ($app) {
-                return new Broadcaster($app['zeromq.connection']);
+            ->extend('zeromq', function ($app) {
+                return new Broadcaster($app['zeromq']);
             });
     }
 

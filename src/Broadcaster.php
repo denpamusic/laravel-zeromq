@@ -7,21 +7,30 @@ use Illuminate\Broadcasting\Broadcasters\Broadcaster as IlluminateBroadcaster;
 class Broadcaster extends IlluminateBroadcaster
 {
     /**
-     * Default ZeroMQ connection.
+     * ZeroMQ manager.
      *
-     * @var \Denpa\ZeroMQ\Connection
+     * @var \Denpa\ZeroMQ\Manager
+     */
+    protected $zeromq;
+
+    /**
+     * ZeroMQ connection.
+     *
+     * @var string|null
      */
     protected $connection;
 
     /**
      * Constructs broadcaster instance.
      *
-     * @param  \Denpa\ZeroMQ\Connection  $connection
+     * @param  \Denpa\ZeroMQ\Manager  $manager
+     * @param  string|null  $connection
      *
      * @return void
      */
-    public function __construct(Connection $connection)
+    public function __construct(Manager $zeromq, $connection = null)
     {
+        $this->zeromq = $zeromq;
         $this->connection = $connection;
     }
 
@@ -61,6 +70,10 @@ class Broadcaster extends IlluminateBroadcaster
      */
     public function broadcast(array $channels, $event, array $payload = [])
     {
-        $this->connection->publish($channels, $payload);
+        $connection = $this->zeromq->connection($this->connection);
+
+        foreach ($this->formatChannels($channels) as $channel) {
+            $connection->publish($channel, $payload);
+        }
     }
 }
