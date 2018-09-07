@@ -103,7 +103,6 @@ class Connection
         $socket = $this->context->getSocket(ZMQ::SOCKET_PUB);
 
         $pub = $socket->bind($this->getDsn());
-
         $pub->sendmulti([$channel, $this->formatMessage($message)]);
     }
 

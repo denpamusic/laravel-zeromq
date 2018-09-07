@@ -25,6 +25,9 @@
         "psr-4" : {
             "Denpa\\ZeroMQ\\": "src/"
         },
+        "classmap" : [
+            "tests"
+        ],
         "files": [
             "src/helpers.php"
         ]
