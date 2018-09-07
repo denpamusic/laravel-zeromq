@@ -1,8 +1,5 @@
 <?php
 
-use Denpa\ZeroMQ\Manager;
-use Denpa\ZeroMQ\Connection;
-use Denpa\ZeroMQ\Broadcaster;
 use Denpa\ZeroMQ\Providers\ServiceProvider;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 
@@ -75,7 +72,7 @@ abstract class TestCase extends OrchestraTestCase
     }
 
     /**
-     * Mock \React\EventLoop\LoopInterface
+     * Mock \React\EventLoop\LoopInterface.
      *
      * @return \PHPUnit\Framework\MockObject\MockObject
      */
@@ -86,7 +83,7 @@ abstract class TestCase extends OrchestraTestCase
     }
 
     /**
-     * Mock \React\ZMQ\Context
+     * Mock \React\ZMQ\Context.
      *
      * @return \PHPUnit\Framework\MockObject\MockObject
      */
@@ -98,7 +95,7 @@ abstract class TestCase extends OrchestraTestCase
     }
 
     /**
-     * Mock \React\ZMQ\SocketWrapper
+     * Mock \React\ZMQ\SocketWrapper.
      *
      * @return \PHPUnit\Framework\MockObject\MockObject
      */

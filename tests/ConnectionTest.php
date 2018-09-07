@@ -1,9 +1,7 @@
 <?php
 
-use Denpa\ZeroMQ\Manager;
 use Denpa\ZeroMQ\Connection;
 use React\ZMQ\SocketWrapper;
-use React\EventLoop\LoopInterface;
 
 class ConnectionTest extends TestCase
 {

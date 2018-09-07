@@ -1,6 +1,5 @@
 <?php
 
-use React\ZMQ\SocketWrapper;
 use Denpa\ZeroMQ\Broadcaster;
 
 class DriverTest extends TestCase
