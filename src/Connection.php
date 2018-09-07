@@ -65,6 +65,32 @@ class Connection
     }
 
     /**
+     * Sets loop interface.
+     *
+     * @param  \React\EventLoop\LoopInterface  $loop
+     *
+     * @return static
+     */
+    public function setLoop(LoopInterface $loop)
+    {
+        $this->loop = $loop;
+
+        return $this;
+    }
+
+    /**
+     * Sets loop interface.
+     *
+     * @return static
+     */
+    public function setContext(Context $context)
+    {
+        $this->context = $context;
+
+        return $this;
+    }
+
+    /**
      * Publishes message.
      *
      * @param  string $channel
@@ -78,7 +104,7 @@ class Connection
 
         $pub = $socket->bind($this->getDsn());
 
-        $pub->sendmulti([$channel, $message]);
+        $pub->sendmulti([$channel, $this->formatMessage($message)]);
     }
 
     /**
@@ -99,12 +125,16 @@ class Connection
     /**
      * Pushes message.
      *
+     * @param  mixed  $message
+     *
      * @return void
      */
     public function push($message)
     {
         $socket = $this->context->getSocket(ZMQ::SOCKET_PUSH);
-        $socket->connect($this->getDsn())->send($message);
+
+        $socket->connect($this->getDsn())
+            ->send($this->formatMessage($message));
     }
 
     /**
@@ -128,6 +158,19 @@ class Connection
         $socket->on('messages', $callback);
 
         $this->loop->run();
+    }
+
+    /**
+     * Formats message.
+     *
+     * @param  mixed  $message
+     *
+     * @return string
+     */
+    protected function formatMessage($message)
+    {
+        return is_array($message) || is_object($message) ?
+            json_encode($message) : $message;
     }
 
     /**
