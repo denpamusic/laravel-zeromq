@@ -10,7 +10,7 @@ php:
   - hhvm
 
 before_install:
-  - sudo rm /etc/apt/sources.list.d/mongodb-3.2.list
+  - sudo rm /etc/apt/sources.list.d/couchdb.list
   - sudo apt-get update -qq
   - sudo apt-get install -qq libzmq3-dev libsodium-dev
 
