@@ -3,7 +3,6 @@
 namespace Denpa\ZeroMQ;
 
 use React\ZMQ\Context;
-use Denpa\ZeroMQ\Connection;
 use React\EventLoop\Factory as EventLoop;
 
 class Connector

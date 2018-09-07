@@ -62,8 +62,6 @@ class Manager
     {
         $name = $name ?: 'default';
 
-        $options = $this->config['options'] ?? [];
-
         if (! array_key_exists($name, $this->config)) {
             throw new InvalidArgumentException(
                 "Could not find connection configuration [$name]"

@@ -139,8 +139,8 @@ class Connection
     {
         $protocol = $this->config['protocol'] ?? 'tcp';
 
-        return $protocol . '://' .
-            $this->config['host'] . ':' .
+        return $protocol.'://'.
+            $this->config['host'].':'.
             $this->config['port'];
     }
 }
