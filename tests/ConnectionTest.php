@@ -76,9 +76,12 @@ class ConnectionTest extends TestCase
             ->will($this->returnSelf());
 
         $socket
-            ->expects($this->once())
+            ->expects($this->exactly(2))
             ->method('on')
-            ->with('messages', $callback)
+            ->withConsecutive(
+                ['messages', $callback],
+                ['message', $callback]
+            )
             ->will($this->returnValue($callback('test')));
 
         $context
@@ -169,9 +172,12 @@ class ConnectionTest extends TestCase
             );
 
         $socket
-            ->expects($this->once())
+            ->expects($this->exactly(2))
             ->method('on')
-            ->with('messages', $callback)
+            ->withConsecutive(
+                ['messages', $callback],
+                ['message', $callback]
+            )
             ->will($this->returnValue($callback('test')));
 
         $loop

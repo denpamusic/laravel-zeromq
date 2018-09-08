@@ -123,7 +123,10 @@ class Connection
     public function pull(callable $callback)
     {
         $socket = $this->context->getSocket(ZMQ::SOCKET_PULL);
-        $socket->bind($this->getDsn())->on('messages', $callback);
+        $socket->bind($this->getDsn());
+
+        $socket->on('messages', $callback);
+        $socket->on('message', $callback);
 
         $this->loop->run();
     }
@@ -166,6 +169,7 @@ class Connection
         }
 
         $socket->on('messages', $callback);
+        $socket->on('message', $callback);
 
         $this->loop->run();
     }
