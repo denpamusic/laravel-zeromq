@@ -32,44 +32,44 @@ You also might want to add facade to $aliases array in `/config/app.php`.
 ## Usage
 Publish:
 ```php
-    zeromq()->publish(['foo', 'bar'], 'hello');
-    zeromq()->connection('test')->publish['foo', 'bar'], 'hello');
+zeromq()->publish(['foo', 'bar'], 'hello');
+zeromq()->connection('test')->publish['foo', 'bar'], 'hello');
 ```
 
 Pull:
 ```php
-    zeromq()->pull(function ($message) {
-        echo $message;
-    });
+zeromq()->pull(function ($message) {
+    echo $message;
+});
 ```
 
 Push:
 ```php
-    zeromq()->push('hello');
+zeromq()->push('hello');
 ```
 
 Subscribe:
 ```php
-    zeromq()->subscribe(['foo', 'bar'], function ($message) {
-        echo $message;
-    });
+zeromq()->subscribe(['foo', 'bar'], function ($message) {
+    echo $message;
+});
 ```
 # Facade
 ```php
-    use Denpa\ZeroMQ\Facades\ZeroMQ;
+use Denpa\ZeroMQ\Facades\ZeroMQ;
 
-    $callback = function ($message) {
-        echo $message;
-    }
+$callback = function ($message) {
+    echo $message;
+}
 
-    // use default connection
-    ZeroMQ::publish(['foo', 'bar'], 'hello');
-    ZeroMQ::pull($callback);
-    ZeroMQ::push('hello');
-    ZeroMQ::subscribe(['foo', 'bar'], $callback);
+// use default connection
+ZeroMQ::publish(['foo', 'bar'], 'hello');
+ZeroMQ::pull($callback);
+ZeroMQ::push('hello');
+ZeroMQ::subscribe(['foo', 'bar'], $callback);
 
-    // use different connection
-    ZeroMQ::connection('baz')->push('hello');
+// use different connection
+ZeroMQ::connection('baz')->push('hello');
 ```
 
 ## Broadcasting
