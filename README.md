@@ -3,7 +3,10 @@
 [![Build Status](https://travis-ci.org/denpamusic/laravel-zeromq.svg)](https://travis-ci.org/denpamusic/laravel-zeromq) [![Code Climate](https://codeclimate.com/github/denpamusic/laravel-zeromq/badges/gpa.svg)](https://codeclimate.com/github/denpamusic/laravel-zeromq) <a href="https://codeclimate.com/github/denpamusic/laravel-zeromq/coverage"><img src="https://codeclimate.com/github/denpamusic/laravel-zeromq/badges/coverage.svg" /></a>
 
 ## About
+**Please note that this package is currently in active development, don't use in production environment**
+
 Laravel ZeroMQ driver based on react/zmq.
+
 
 ## Installation
 Add `Denpa\ZeroMQ\Providers\ServiceProvider::class,` line to the providers list somewhere near the bottom of your `/config/app.php` file.
@@ -54,7 +57,7 @@ zeromq()->subscribe(['foo', 'bar'], function ($message) {
     echo $message;
 });
 ```
-# Facade
+## Facade
 ```php
 use Denpa\ZeroMQ\Facades\ZeroMQ;
 
