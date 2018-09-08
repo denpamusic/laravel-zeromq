@@ -2,6 +2,7 @@
 
 namespace Denpa\ZeroMQ;
 
+use Denpa\ZeroMQ\Manager as ZeroMQ;
 use Illuminate\Broadcasting\Broadcasters\Broadcaster as IlluminateBroadcaster;
 
 class Broadcaster extends IlluminateBroadcaster
@@ -28,7 +29,7 @@ class Broadcaster extends IlluminateBroadcaster
      *
      * @return void
      */
-    public function __construct(Manager $zeromq, $connection = null)
+    public function __construct(ZeroMQ $zeromq, $connection = null)
     {
         $this->zeromq = $zeromq;
         $this->connection = $connection;

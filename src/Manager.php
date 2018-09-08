@@ -93,7 +93,7 @@ class Manager
      *
      * @return mixed
      */
-    public function __call($method, $parameters)
+    public function __call($method, array $parameters)
     {
         return $this->connection()->{$method}(...$parameters);
     }
