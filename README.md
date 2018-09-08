@@ -39,7 +39,7 @@ Publish:
 Pull:
 ```php
     zeromq()->pull(function ($message) {
-    	echo $message;
+        echo $message;
     });
 ```
 
@@ -56,14 +56,14 @@ Subscribe:
 ```
 # Facade
 ```php
-	use Denpa\ZeroMQ\Facades\ZeroMQ;
+    use Denpa\ZeroMQ\Facades\ZeroMQ;
 
-	$callback = function ($message) {
-    	echo $message;
+    $callback = function ($message) {
+        echo $message;
     }
 
     // use default connection
-	ZeroMQ::publish(['foo', 'bar'], 'hello');
+    ZeroMQ::publish(['foo', 'bar'], 'hello');
     ZeroMQ::pull($callback);
     ZeroMQ::push('hello');
     ZeroMQ::subscribe(['foo', 'bar'], $callback);
@@ -76,7 +76,7 @@ Subscribe:
 Set `BROADCAST_DRIVER=zeromq` in environment file and add following lines
 ```php
 'zeromq' => [
-	'driver' => 'zeromq',
+    'driver' => 'zeromq',
 ],
 ```
 to 'connections' key in `config/broadcasting.php`.
