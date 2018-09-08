@@ -103,7 +103,15 @@ abstract class TestCase extends OrchestraTestCase
     {
         return $this->getMockBuilder('React\ZMQ\SocketWrapper')
             ->disableOriginalConstructor()
-            ->setMethods(['bind', 'connect', 'subscribe', 'send', 'sendmulti', 'on'])
+            ->setMethods([
+                'bind',
+                'connect',
+                'subscribe',
+                'send',
+                'sendmulti',
+                'on',
+                'close',
+            ])
             ->getMock();
     }
 }

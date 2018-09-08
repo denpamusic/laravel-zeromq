@@ -23,7 +23,7 @@ class DriverTest extends TestCase
         $context = $this->mockContext();
 
         $socket
-            ->expects($this->exactly(2))
+            ->expects($this->once())
             ->method('bind')
             ->willReturn($socket);
 
@@ -31,12 +31,26 @@ class DriverTest extends TestCase
             ->expects($this->exactly(2))
             ->method('sendmulti')
             ->withConsecutive(
-                [['foo', json_encode(['zab' => 'baz'])]],
-                [['bar', json_encode(['zab' => 'baz'])]]
+                [[
+                    'foo',
+                    json_encode([
+                        'event'  => 'test',
+                        'data'   => ['zab' => 'baz'],
+                        'socket' => null,
+                    ]),
+                ]],
+                [[
+                    'bar',
+                    json_encode([
+                        'event'  => 'test',
+                        'data'   => ['zab' => 'baz'],
+                        'socket' => null,
+                    ]),
+                ]]
             );
 
         $context
-            ->expects($this->exactly(2))
+            ->expects($this->once())
             ->method('__call')
             ->with('getSocket', [ZMQ::SOCKET_PUB])
             ->willReturn($socket);

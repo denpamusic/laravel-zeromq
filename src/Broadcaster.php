@@ -72,8 +72,12 @@ class Broadcaster extends IlluminateBroadcaster
     {
         $connection = $this->zeromq->connection($this->connection);
 
-        foreach ($this->formatChannels($channels) as $channel) {
-            $connection->publish($channel, $payload);
-        }
+        $payload = json_encode([
+            'event'  => $event,
+            'data'   => $payload,
+            'socket' => array_pull($payload, 'socket'),
+        ]);
+
+        $connection->publish($this->formatChannels($channels), $payload);
     }
 }

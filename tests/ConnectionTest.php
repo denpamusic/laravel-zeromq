@@ -38,6 +38,10 @@ class ConnectionTest extends TestCase
             ->method('sendmulti')
             ->with(['test', json_encode(['foo' => 'bar'])]);
 
+        $socket
+            ->expects($this->once())
+            ->method('close');
+
         $context
             ->expects($this->once())
             ->method('__call')
@@ -47,7 +51,7 @@ class ConnectionTest extends TestCase
         zeromq()
             ->setLoop($loop)
             ->setContext($context)
-            ->publish('test', ['foo' => 'bar']);
+            ->publish(['test'], ['foo' => 'bar']);
     }
 
     /**
@@ -112,6 +116,10 @@ class ConnectionTest extends TestCase
         $socket
             ->method('send')
             ->with('test');
+
+        $socket
+            ->expects($this->once())
+            ->method('close');
 
         $context
             ->expects($this->once())
