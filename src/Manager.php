@@ -4,6 +4,7 @@ namespace Denpa\ZeroMQ;
 
 use React\ZMQ\Context;
 use InvalidArgumentException;
+use React\EventLoop\LoopInterface;
 use React\EventLoop\Factory as EventLoop;
 
 class Manager
@@ -39,7 +40,7 @@ class Manager
     /**
      * Creates new ZeroMQ manager instance.
      *
-     * @param array $config
+     * @param  array  $config
      *
      * @return void
      */
@@ -63,13 +64,27 @@ class Manager
     }
 
     /**
+     * Sets event loop.
+     *
+     * @param  \React\EventLoop\LoopInterface  $loop
+     *
+     * @return static
+     */
+    public function setLoop(LoopInterface $loop)
+    {
+        $this->loop = $loop;
+
+        return $this;
+    }
+
+    /**
      * Gets ZeroMQ connection by name.
      *
      * @param  string|null  $name
      *
      * @return \Denpa\ZeroMQ\Connection
      */
-    public function connection($name = null) : \Denpa\ZeroMQ\Connection
+    public function connection($name = null)
     {
         $name = $name ?: 'default';
 

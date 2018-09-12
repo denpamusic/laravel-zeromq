@@ -30,8 +30,7 @@ class ConnectionTest extends TestCase
 
         $socket
             ->expects($this->once())
-            ->method('bind')
-            ->willReturn($socket);
+            ->method('bind');
 
         $socket
             ->expects($this->once())
@@ -48,10 +47,15 @@ class ConnectionTest extends TestCase
             ->with('getSocket', [ZMQ::SOCKET_PUB])
             ->willReturn($socket);
 
+        $loop
+            ->expects($this->once())
+            ->method('run');
+
         zeromq()
             ->setLoop($loop)
             ->setContext($context)
-            ->publish(['test'], ['foo' => 'bar']);
+            ->publish(['test'], ['foo' => 'bar'])
+            ->run();
     }
 
     /**
@@ -72,15 +76,14 @@ class ConnectionTest extends TestCase
 
         $socket
             ->expects($this->once())
-            ->method('bind')
-            ->will($this->returnSelf());
+            ->method('bind');
 
         $socket
             ->expects($this->exactly(2))
             ->method('on')
             ->withConsecutive(
-                ['messages', $callback],
-                ['message', $callback]
+                ['messages'],
+                ['message']
             )
             ->will($this->returnValue($callback('test')));
 
@@ -97,7 +100,8 @@ class ConnectionTest extends TestCase
         zeromq()
             ->setLoop($loop)
             ->setContext($context)
-            ->pull($callback);
+            ->pull($callback)
+            ->run();
     }
 
     /**
@@ -130,10 +134,15 @@ class ConnectionTest extends TestCase
             ->with('getSocket', [ZMQ::SOCKET_PUSH])
             ->willReturn($socket);
 
+        $loop
+            ->expects($this->once())
+            ->method('run');
+
         zeromq()
             ->setLoop($loop)
             ->setContext($context)
-            ->push('test');
+            ->push('test')
+            ->run();
     }
 
     /**
@@ -160,23 +169,22 @@ class ConnectionTest extends TestCase
 
         $socket
             ->expects($this->once())
-            ->method('connect')
-            ->will($this->returnSelf());
+            ->method('connect');
 
         $socket
             ->expects($this->exactly(2))
             ->method('subscribe')
             ->withConsecutive(
-                [$this->equalTo('foo')],
-                [$this->equalTo('bar')]
+                ['foo'],
+                ['bar']
             );
 
         $socket
             ->expects($this->exactly(2))
             ->method('on')
             ->withConsecutive(
-                ['messages', $callback],
-                ['message', $callback]
+                ['messages'],
+                ['message']
             )
             ->will($this->returnValue($callback('test')));
 
@@ -187,6 +195,7 @@ class ConnectionTest extends TestCase
         zeromq()
             ->setLoop($loop)
             ->setContext($context)
-            ->subscribe(['foo', 'bar'], $callback);
+            ->subscribe(['foo', 'bar'], $callback)
+            ->run();
     }
 }

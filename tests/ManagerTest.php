@@ -1,8 +1,8 @@
 <?php
 
+use React\ZMQ\Context;
 use Denpa\ZeroMQ\Manager;
 use Denpa\ZeroMQ\Connection;
-use React\EventLoop\LoopInterface;
 
 class ManagerTest extends TestCase
 {
@@ -26,8 +26,8 @@ class ManagerTest extends TestCase
      */
     public function testMagicCall()
     {
-        $loop = zeromq()->getLoop();
+        $context = zeromq()->getContext();
 
-        $this->assertInstanceOf(LoopInterface::class, $loop);
+        $this->assertInstanceOf(Context::class, $context);
     }
 }

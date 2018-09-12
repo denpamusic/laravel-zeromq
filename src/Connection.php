@@ -4,6 +4,7 @@ namespace Denpa\ZeroMQ;
 
 use ZMQ;
 use React\ZMQ\Context;
+use React\EventLoop\LoopInterface;
 use React\ZMQ\SocketWrapper as Socket;
 use React\EventLoop\LoopInterface as EventLoop;
 
@@ -34,7 +35,7 @@ class Connection
      */
     public function __construct(
         Context $context,
-        EventLoop $loop,
+        LoopInterface $loop,
         array $config
     ) {
         $this->context = $context;
@@ -56,7 +57,9 @@ class Connection
     }
 
     /**
-     * Sets loop interface.
+     * Sets ZeroMQ context.
+     *
+     * @param  \React\ZMQ\Context  $context
      *
      * @return static
      */
@@ -65,6 +68,16 @@ class Connection
         $this->context = $context;
 
         return $this;
+    }
+
+    /**
+     * Gets ZeroMQ context.
+     *
+     * @return \React\ZMQ\Context
+     */
+    public function getContext()
+    {
+        return $this->context;
     }
 
     /**
