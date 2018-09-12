@@ -80,5 +80,7 @@ class Broadcaster extends IlluminateBroadcaster
         ]);
 
         $connection->publish($this->formatChannels($channels), $payload);
+
+        $this->zeromq->run();
     }
 }

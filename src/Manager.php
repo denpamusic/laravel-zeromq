@@ -2,7 +2,9 @@
 
 namespace Denpa\ZeroMQ;
 
+use React\ZMQ\Context;
 use InvalidArgumentException;
+use React\EventLoop\Factory as EventLoop;
 
 class Manager
 {
@@ -21,6 +23,20 @@ class Manager
     protected $connections;
 
     /**
+     * Event loop instance.
+     *
+     * @var \React\EventLoop\LoopInterface
+     */
+    protected $loop;
+
+    /**
+     * Was loop manually stopped.
+     *
+     * @var bool
+     */
+    protected $stopped = false;
+
+    /**
      * Creates new ZeroMQ manager instance.
      *
      * @param array $config
@@ -31,6 +47,19 @@ class Manager
     {
         $this->config = $config;
         $this->connections = collect();
+        $this->loop = EventLoop::create();
+    }
+
+    /**
+     * Runs event loop on instance destruction.
+     *
+     * @return void
+     */
+    public function __destruct()
+    {
+        if (! $this->stopped) {
+            $this->loop->run();
+        }
     }
 
     /**
@@ -40,7 +69,7 @@ class Manager
      *
      * @return \Denpa\ZeroMQ\Connection
      */
-    public function connection($name = null)
+    public function connection($name = null) : \Denpa\ZeroMQ\Connection
     {
         $name = $name ?: 'default';
 
@@ -68,21 +97,40 @@ class Manager
             );
         }
 
-        return $this->connector()->context($this->config[$name]);
+        return $this->make($this->config[$name]);
     }
 
     /**
-     * Gets connector.
+     * Creates new ZeroMQ connection.
      *
-     * @param string|null $name
+     * @param  array  $config
      *
-     * @return \Denpa\ZeroMQ\Connector
+     * @return \Denpa\ZeroMQ\Connection
      */
-    public function connector($name = null)
+    public function make(array $config)
     {
-        $name = $name ?: 'default';
+        return new Connection(new Context($this->loop), $this->loop, $config);
+    }
 
-        return new Connector($this->config[$name]);
+    /**
+     * Runs event loop.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        $this->loop->run();
+    }
+
+    /**
+     * Stops event loop.
+     *
+     * @return void
+     */
+    public function stop()
+    {
+        $this->loop->stop();
+        $this->stopped = true;
     }
 
     /**

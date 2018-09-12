@@ -4,7 +4,8 @@ namespace Denpa\ZeroMQ;
 
 use ZMQ;
 use React\ZMQ\Context;
-use React\EventLoop\LoopInterface;
+use React\ZMQ\SocketWrapper as Socket;
+use React\EventLoop\LoopInterface as EventLoop;
 
 class Connection
 {
@@ -33,11 +34,11 @@ class Connection
      */
     public function __construct(
         Context $context,
-        LoopInterface $loop,
-        array $config)
-    {
-        $this->loop = $loop;
+        EventLoop $loop,
+        array $config
+    ) {
         $this->context = $context;
+        $this->loop = $loop;
         $this->config = $config;
     }
 
@@ -52,30 +53,6 @@ class Connection
     public function __call($method, array $parameters = [])
     {
         return $this->context->{$method}(...$parameters);
-    }
-
-    /**
-     * Gets loop interface.
-     *
-     * @return \React\EventLoop\LoopInterface
-     */
-    public function getLoop()
-    {
-        return $this->loop;
-    }
-
-    /**
-     * Sets loop interface.
-     *
-     * @param  \React\EventLoop\LoopInterface  $loop
-     *
-     * @return static
-     */
-    public function setLoop(LoopInterface $loop)
-    {
-        $this->loop = $loop;
-
-        return $this;
     }
 
     /**
@@ -96,21 +73,21 @@ class Connection
      * @param  array  $channels
      * @param  mixed  $message
      *
-     * @return void
+     * @return \React\EventLoop\LoopInterface
      */
     public function publish(array $channels, $message)
     {
         $socket = $this->context->getSocket(ZMQ::SOCKET_PUB);
 
-        $pub = $socket->bind($this->getDsn());
+        $socket->bind($this->getDsn());
 
         foreach ($channels as $channel) {
-            $pub->sendmulti([$channel, $this->formatMessage($message)]);
+            $socket->sendmulti([$channel, $this->formatMessage($message)]);
         }
 
-        $pub->close();
+        $socket->close();
 
-        $this->loop->run();
+        return $this->loop;
     }
 
     /**
@@ -118,17 +95,21 @@ class Connection
      *
      * @param  callable  $callback
      *
-     * @return void
+     * @return \React\EventLoop\LoopInterface
      */
     public function pull(callable $callback)
     {
         $socket = $this->context->getSocket(ZMQ::SOCKET_PULL);
         $socket->bind($this->getDsn());
 
-        $socket->on('messages', $callback);
-        $socket->on('message', $callback);
+        $onSuccess = function ($message) use ($callback, $socket) {
+            $this->onSuccess($message, $callback, $socket);
+        };
 
-        $this->loop->run();
+        $socket->on('messages', $onSuccess);
+        $socket->on('message', $onSuccess);
+
+        return $this->loop;
     }
 
     /**
@@ -136,18 +117,18 @@ class Connection
      *
      * @param  mixed  $message
      *
-     * @return void
+     * @return \React\EventLoop\LoopInterface
      */
     public function push($message)
     {
         $socket = $this->context->getSocket(ZMQ::SOCKET_PUSH);
 
-        $socket->connect($this->getDsn())
-            ->send($this->formatMessage($message));
+        $socket->connect($this->getDsn());
+        $socket->send($this->formatMessage($message));
 
         $socket->close();
 
-        $this->loop->run();
+        return $this->loop;
     }
 
     /**
@@ -156,7 +137,7 @@ class Connection
      * @param  array     $channels
      * @param  callable  $callback
      *
-     * @return void
+     * @return \React\EventLoop\LoopInterface
      */
     public function subscribe(array $channels, callable $callback)
     {
@@ -168,10 +149,30 @@ class Connection
             $socket->subscribe($channel);
         }
 
-        $socket->on('messages', $callback);
-        $socket->on('message', $callback);
+        $onSuccess = function ($message) use ($callback, $socket) {
+            $this->onSuccess($message, $callback, $socket);
+        };
 
-        $this->loop->run();
+        $socket->on('messages', $onSuccess);
+        $socket->on('message', $onSuccess);
+
+        return $this->loop;
+    }
+
+    /**
+     * Success callback.
+     *
+     * @param  string    $message
+     * @param  callable  $callback
+     * @param  \React\ZMQ\SocketWrapper $socket
+     *
+     * @return void
+     */
+    protected function onSuccess($message, callable $callback, Socket $socket)
+    {
+        if ($callback($message) === false) {
+            $socket->close();
+        }
     }
 
     /**
