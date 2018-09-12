@@ -72,7 +72,7 @@ class ConnectionTest extends TestCase
             $this->callback(function ($message) {
                 return $message == 'test';
             }),
-        ]);
+        ], $this->exactly(2), $this->returnValue(false));
 
         $socket
             ->expects($this->once())
@@ -85,7 +85,16 @@ class ConnectionTest extends TestCase
                 ['messages'],
                 ['message']
             )
-            ->will($this->returnValue($callback('test')));
+            ->will($this->returnCallback(function ($event, $callback) {
+                $callback('test');
+            }));
+
+        $socket
+            ->expects($this->once())
+            ->method('close')
+            ->will($this->returnCallback(function () use ($socket) {
+                $socket->closed = true;
+            }));
 
         $context
             ->expects($this->once())
@@ -159,7 +168,7 @@ class ConnectionTest extends TestCase
             $this->callback(function ($message) {
                 return $message == 'test';
             }),
-        ]);
+        ], $this->exactly(2), $this->returnValue(false));
 
         $context
             ->expects($this->once())
@@ -186,7 +195,16 @@ class ConnectionTest extends TestCase
                 ['messages'],
                 ['message']
             )
-            ->will($this->returnValue($callback('test')));
+            ->will($this->returnCallback(function ($event, $callback) {
+                $callback('test');
+            }));
+
+        $socket
+            ->expects($this->once())
+            ->method('close')
+            ->will($this->returnCallback(function () use ($socket) {
+                $socket->closed = true;
+            }));
 
         $loop
             ->expects($this->once())

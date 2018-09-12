@@ -30,4 +30,46 @@ class ManagerTest extends TestCase
 
         $this->assertInstanceOf(Context::class, $context);
     }
+
+    /**
+     * Test event loop run method.
+     *
+     * @return void
+     */
+    public function testRun()
+    {
+        $loop = $this->mockLoop();
+
+        $loop
+            ->expects($this->once())
+            ->method('run');
+
+        zeromq()->setLoop($loop);
+
+        zeromq()->run();
+    }
+
+    /**
+     * Test event loop stop method.
+     *
+     * @return void
+     */
+    public function testStop()
+    {
+        $loop = $this->mockLoop();
+
+        $loop
+            ->expects($this->once())
+            ->method('stop');
+
+        // loop should not start on destruct if it has been stopped
+        $loop
+            ->expects($this->never())
+            ->method('run');
+
+        zeromq()->setLoop($loop);
+
+        zeromq()->stop();
+        zeromq()->__destruct();
+    }
 }

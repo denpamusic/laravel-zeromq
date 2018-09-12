@@ -54,19 +54,28 @@ abstract class TestCase extends OrchestraTestCase
     /**
      * Get Closure mock.
      *
-     * @param array $with
+     * @param  array  $with
+     * @param  PHPUnit_Framework_MockObject_Matcher_InvokedCount|null  $expects
+     * @param  PHPUnit_Framework_MockObject_Stub_Return|null  $return
      *
      * @return callable
      */
-    protected function mockCallable(array $with = [])
-    {
+    protected function mockCallable(
+        array $with = [],
+        $expects = null,
+        $return = null
+    ) {
+        $expects = $expects ?? $this->once();
+        $return = $return ?? $this->returnValue(null);
+
         $callable = $this->getMockBuilder(\stdClass::class)
             ->setMethods(['__invoke'])
             ->getMock();
 
-        $callable->expects($this->once())
+        $callable->expects($expects)
             ->method('__invoke')
-            ->with(...$with);
+            ->with(...$with)
+            ->will($return);
 
         return $callable;
     }

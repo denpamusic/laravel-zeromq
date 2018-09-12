@@ -183,7 +183,9 @@ class Connection
     protected function onSuccess($message, callable $callback, Socket $socket)
     {
         if ($callback($message) === false) {
-            $socket->close();
+            if (! $socket->closed) {
+                $socket->close();
+            }
         }
     }
 
