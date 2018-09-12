@@ -6,7 +6,6 @@ use ZMQ;
 use React\ZMQ\Context;
 use React\EventLoop\LoopInterface;
 use React\ZMQ\SocketWrapper as Socket;
-use React\EventLoop\LoopInterface as EventLoop;
 
 class Connection
 {
