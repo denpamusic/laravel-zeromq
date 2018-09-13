@@ -1,6 +1,10 @@
 # ZeroMQ driver for Laravel
 
-[![Build Status](https://travis-ci.org/denpamusic/laravel-zeromq.svg)](https://travis-ci.org/denpamusic/laravel-zeromq) [![Code Climate](https://codeclimate.com/github/denpamusic/laravel-zeromq/badges/gpa.svg)](https://codeclimate.com/github/denpamusic/laravel-zeromq) <a href="https://codeclimate.com/github/denpamusic/laravel-zeromq/coverage"><img src="https://codeclimate.com/github/denpamusic/laravel-zeromq/badges/coverage.svg" /></a>
+[![Latest Stable Version](https://poser.pugx.org/denpa/laravel-zeromq/v/stable)](https://packagist.org/packages/denpa/laravel-zeromq)
+[![License](https://poser.pugx.org/denpa/laravel-zeromq/license)](https://packagist.org/packages/denpa/laravel-zeromq)
+[![Build Status](https://travis-ci.org/denpamusic/laravel-zeromq.svg)](https://travis-ci.org/denpamusic/laravel-zeromq)
+[![Code Climate](https://codeclimate.com/github/denpamusic/laravel-zeromq/badges/gpa.svg)](https://codeclimate.com/github/denpamusic/laravel-zeromq)
+[![Code Coverage](https://codeclimate.com/github/denpamusic/laravel-zeromq/badges/coverage.svg)](https://codeclimate.com/github/denpamusic/laravel-zeromq/coverage)
 
 ## About
 **Please note that this package is currently in active development, don't use in production environment**
