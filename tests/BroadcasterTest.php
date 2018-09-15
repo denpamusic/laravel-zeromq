@@ -9,8 +9,8 @@ class BroadcasterTest extends TestCase
     {
         parent::setUp();
 
-        $appKey = base64_encode(md5(uniqid(rand(), true)));
-        $this->app['config']->set('app.key', 'base64:' . $appKey);
+        $appkey = base64_encode(md5(uniqid(rand(), true)));
+        $this->app['config']->set('app.key', "base64:$appkey");
         $this->app['config']->set('broadcasting.default', 'zeromq');
         $this->app['config']
             ->set('broadcasting.connections.zeromq.driver', 'zeromq');
@@ -121,7 +121,8 @@ class BroadcasterTest extends TestCase
     }
 }
 
-class FakeUser extends Authenticatable {
+class FakeUser extends Authenticatable
+{
     public $attributes = [
         'id'    => 1,
         'name'  => 'Denis Paavilainen',
