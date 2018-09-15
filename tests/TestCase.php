@@ -120,6 +120,7 @@ abstract class TestCase extends OrchestraTestCase
                 'sendmulti',
                 'on',
                 'close',
+                'end',
             ])
             ->getMock();
     }
