@@ -2,7 +2,9 @@
 
 namespace Denpa\ZeroMQ;
 
+use Illuminate\Support\Str;
 use Denpa\ZeroMQ\Manager as ZeroMQ;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Illuminate\Broadcasting\Broadcasters\Broadcaster as IlluminateBroadcaster;
 
 class Broadcaster extends IlluminateBroadcaster
@@ -44,7 +46,18 @@ class Broadcaster extends IlluminateBroadcaster
      */
     public function auth($request)
     {
-        //
+        if (Str::startsWith($request->channel_name, ['private-', 'presence-']) &&
+            ! $request->user()) {
+            throw new AccessDeniedHttpException;
+        }
+
+        $channelName = Str::startsWith($request->channel_name, 'private-')
+                            ? Str::replaceFirst('private-', '', $request->channel_name)
+                            : Str::replaceFirst('presence-', '', $request->channel_name);
+
+        return parent::verifyUserCanAccessChannel(
+            $request, $channelName
+        );
     }
 
     /**
@@ -57,7 +70,14 @@ class Broadcaster extends IlluminateBroadcaster
      */
     public function validAuthenticationResponse($request, $result)
     {
-        //
+        if (is_bool($result)) {
+            return json_encode($result);
+        }
+
+        return json_encode(['channel_data' => [
+            'user_id' => $request->user()->getAuthIdentifier(),
+            'user_info' => $result,
+        ]]);
     }
 
     /**
@@ -79,8 +99,6 @@ class Broadcaster extends IlluminateBroadcaster
             'socket' => array_pull($payload, 'socket'),
         ]);
 
-        $connection->publish($this->formatChannels($channels), $payload);
-
-        $this->zeromq->run();
+        $connection->publish($this->formatChannels($channels), $payload)->run();
     }
 }
