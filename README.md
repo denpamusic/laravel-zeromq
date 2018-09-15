@@ -7,9 +7,7 @@
 [![Code Coverage](https://codeclimate.com/github/denpamusic/laravel-zeromq/badges/coverage.svg)](https://codeclimate.com/github/denpamusic/laravel-zeromq/coverage)
 
 ## About
-**Please note that this package is currently in active development, don't use in production environment**
-
-Laravel ZeroMQ driver based on react/zmq.
+Fully unit-tested Laravel ZeroMQ driver based on react/zmq.
 
 
 ## Installation
