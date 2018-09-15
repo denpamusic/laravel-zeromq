@@ -39,7 +39,7 @@ class ConnectionTest extends TestCase
 
         $socket
             ->expects($this->once())
-            ->method('close');
+            ->method('end');
 
         $context
             ->expects($this->once())
@@ -135,7 +135,7 @@ class ConnectionTest extends TestCase
 
         $socket
             ->expects($this->once())
-            ->method('close');
+            ->method('end');
 
         $context
             ->expects($this->once())

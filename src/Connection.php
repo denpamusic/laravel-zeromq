@@ -97,7 +97,7 @@ class Connection
             $socket->sendmulti([$channel, $this->formatMessage($message)]);
         }
 
-        $socket->close();
+        $socket->end();
 
         return $this->loop;
     }
@@ -138,7 +138,7 @@ class Connection
         $socket->connect($this->getDsn());
         $socket->send($this->formatMessage($message));
 
-        $socket->close();
+        $socket->end();
 
         return $this->loop;
     }
