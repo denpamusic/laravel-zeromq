@@ -34,6 +34,7 @@ You also might want to add facade to $aliases array in `/config/app.php`.
 
 ## Requirements
 * PHP 7.0 or higher
+* ZMQ PHP extension
 * Laravel 5.1 or higher
 
 ## Usage
