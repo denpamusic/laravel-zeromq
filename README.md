@@ -90,15 +90,15 @@ to 'connections' key in `config/broadcasting.php`.
 Now use laravel `broadcast($event);` helper to broadcast events via ZeroMQ.
 
 ## Bitcoin Core (laravel-bitcoinrpc)
-laravel-bitcoinrpc integrates this package to subscribe to topics broadcasted by Bitcoin Core (and some forks).  
+laravel-bitcoinrpc integrates this package to subscribe to topics broadcasted by Bitcoin Core (and some forks).
 ```php
 bitcoind()->on('hashblock', function ($blockhash, $sequence) {
-    // get hash of new best block and retrive full block info
+    // get hash of new best block and retrieve full block info
     $block = bitcoind()->getBlock($blockhash);
     print_r($block->get());
 });
 ```
-For more info visit [laravel-bitcoinrpc documentation](https://laravel-bitcoinrpc.denpa.pro/zeromq/).
+For more info, visit [laravel-bitcoinrpc documentation](https://laravel-bitcoinrpc.denpa.pro/zeromq/).
 
 
 ## License
