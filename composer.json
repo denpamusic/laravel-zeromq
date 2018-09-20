@@ -35,7 +35,10 @@
         "laravel": {
             "providers": [
                 "Denpa\\ZeroMQ\\Providers\\ServiceProvider"
-            ]
+            ],
+            "aliases": {
+                "ZeroMQ": "Denpa\\ZeroMQ\\Facades\\ZeroMQ"
+            }
         }
     }
 }

@@ -9,9 +9,13 @@
 ## About
 Fully unit-tested Laravel ZeroMQ driver based on react/zmq.
 
-
 ## Installation
-Add `Denpa\ZeroMQ\Providers\ServiceProvider::class,` line to the providers list somewhere near the bottom of your `/config/app.php` file.
+1. Install package:
+```sh
+composer require denpa/laravel-bitcoinrpc "^1.2"
+```
+
+2. _(skip if using Laravel 5.5 or newer)_ Add service provider and facade to ./config/app.php
 ```php
 'providers' => [
     ...
@@ -19,16 +23,15 @@ Add `Denpa\ZeroMQ\Providers\ServiceProvider::class,` line to the providers list 
 ];
 ```
 
-Publish config file by running
-`php artisan vendor:publish --provider="Denpa\ZeroMQ\Providers\ServiceProvider"` in your project directory.
-
-You also might want to add facade to $aliases array in `/config/app.php`.
 ```php
 'aliases' => [
     ...
     'ZeroMQ' => Denpa\ZeroMQ\Facades\ZeroMQ::class,
 ];
 ```
+
+3. Publish config file
+`php artisan vendor:publish --provider="Denpa\ZeroMQ\Providers\ServiceProvider"` in your project directory.
 
 ## Requirements
 * PHP 7.0 or higher
@@ -100,7 +103,5 @@ bitcoind()->on('hashblock', function ($blockhash, $sequence) {
 ```
 For more info, visit [laravel-bitcoinrpc documentation](https://laravel-bitcoinrpc.denpa.pro/docs/zeromq/).
 
-
 ## License
-
 This product is distributed under [MIT license](https://github.com/denpamusic/laravel-zeromq/blob/master/LICENSE).
