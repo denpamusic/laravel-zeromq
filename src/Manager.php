@@ -19,9 +19,9 @@ class Manager
     /**
      * ZeroMQ connections.
      *
-     * @var \Illuminate\Support\Collection
+     * @var array
      */
-    protected $connections;
+    protected $connections = [];
 
     /**
      * Event loop instance.
@@ -47,7 +47,6 @@ class Manager
     public function __construct(array $config)
     {
         $this->config = $config;
-        $this->connections = collect();
         $this->loop = EventLoop::create();
     }
 
@@ -88,11 +87,11 @@ class Manager
     {
         $name = $name ?: 'default';
 
-        if (! $this->connections->has($name)) {
-            $this->connections->put($name, $this->resolve($name));
+        if (! array_key_exists($name, $this->connections)) {
+            $this->connections[$name] = $this->resolve($name);
         }
 
-        return $this->connections->get($name);
+        return $this->connections[$name];
     }
 
     /**
@@ -134,7 +133,6 @@ class Manager
      */
     public function run()
     {
-        $this->stopped = false;
         $this->loop->run();
     }
 
