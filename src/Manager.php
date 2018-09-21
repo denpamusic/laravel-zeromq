@@ -134,6 +134,7 @@ class Manager
      */
     public function run()
     {
+        $this->stopped = false;
         $this->loop->run();
     }
 
