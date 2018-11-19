@@ -12,7 +12,7 @@ Fully unit-tested Laravel ZeroMQ driver based on react/zmq.
 ## Installation
 1. Install package:
 ```sh
-composer require denpa/laravel-bitcoinrpc "^1.2"
+composer require denpa/laravel-zeromq "^1.0"
 ```
 
 2. _(skip if using Laravel 5.5 or newer)_ Add service provider and facade to ./config/app.php
@@ -42,7 +42,7 @@ composer require denpa/laravel-bitcoinrpc "^1.2"
 Publish:
 ```php
 zeromq()->publish(['foo', 'bar'], 'hello');
-zeromq()->connection('test')->publish['foo', 'bar'], 'hello');
+zeromq()->connection('test')->publish(['foo', 'bar'], 'hello');
 ```
 
 Pull:
@@ -69,7 +69,7 @@ use Denpa\ZeroMQ\Facades\ZeroMQ;
 
 $callback = function ($message) {
     echo $message;
-}
+};
 
 // use default connection
 ZeroMQ::publish(['foo', 'bar'], 'hello');
