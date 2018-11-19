@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Denpa\ZeroMQ\Facades;
 
 use Illuminate\Support\Facades\Facade;
@@ -11,7 +13,7 @@ class ZeroMQ extends Facade
      *
      * @return string
      */
-    protected static function getFacadeAccessor()
+    protected static function getFacadeAccessor() : string
     {
         return 'zeromq';
     }

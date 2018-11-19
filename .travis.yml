@@ -6,6 +6,7 @@ php:
   - 7.0
   - 7.1
   - 7.2
+  - nightly
 
 before_script:
   - echo "yes" | pecl -d preferred_state=beta install zmq
@@ -18,9 +19,11 @@ before_script:
 script:
   - mkdir -p build/logs
   - php vendor/bin/phpunit
-  - if [[ "$TRAVIS_PULL_REQUEST" == "false" ]]; then ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT; fi
+  - if [[ "$TRAVIS_PULL_REQUEST" == "false" && $TRAVIS_PHP_VERSION != "nightly" ]]; then ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT; fi
 
 matrix:
+  allow_failures:
+    - php: nightly
   fast_finish: true
 
 addons:

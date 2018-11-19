@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Denpa\ZeroMQ;
 
 use Illuminate\Support\Str;
@@ -66,9 +68,9 @@ class Broadcaster extends IlluminateBroadcaster
      * @param  \Illuminate\Http\Request  $request
      * @param  mixed  $result
      *
-     * @return mixed
+     * @return string
      */
-    public function validAuthenticationResponse($request, $result)
+    public function validAuthenticationResponse($request, $result) : string
     {
         if (is_bool($result)) {
             return json_encode($result);
@@ -89,7 +91,7 @@ class Broadcaster extends IlluminateBroadcaster
      *
      * @return void
      */
-    public function broadcast(array $channels, $event, array $payload = [])
+    public function broadcast(array $channels, $event, array $payload = []) : void
     {
         $connection = $this->zeromq->connection($this->connection);
 

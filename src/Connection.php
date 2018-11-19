@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Denpa\ZeroMQ;
 
 use ZMQ;
@@ -60,9 +62,9 @@ class Connection
      *
      * @param  \React\ZMQ\Context  $context
      *
-     * @return static
+     * @return self
      */
-    public function setContext(Context $context)
+    public function setContext(Context $context) : self
     {
         $this->context = $context;
 
@@ -74,7 +76,7 @@ class Connection
      *
      * @return \React\ZMQ\Context
      */
-    public function getContext()
+    public function getContext() : Context
     {
         return $this->context;
     }
@@ -87,7 +89,7 @@ class Connection
      *
      * @return \React\EventLoop\LoopInterface
      */
-    public function publish(array $channels, $message)
+    public function publish(array $channels, $message) : LoopInterface
     {
         $socket = $this->context->getSocket(ZMQ::SOCKET_PUB);
 
@@ -109,7 +111,7 @@ class Connection
      *
      * @return \React\EventLoop\LoopInterface
      */
-    public function pull(callable $callback)
+    public function pull(callable $callback) : LoopInterface
     {
         $socket = $this->context->getSocket(ZMQ::SOCKET_PULL);
         $socket->bind($this->getDsn());
@@ -131,7 +133,7 @@ class Connection
      *
      * @return \React\EventLoop\LoopInterface
      */
-    public function push($message)
+    public function push($message) : LoopInterface
     {
         $socket = $this->context->getSocket(ZMQ::SOCKET_PUSH);
 
@@ -151,7 +153,7 @@ class Connection
      *
      * @return \React\EventLoop\LoopInterface
      */
-    public function subscribe(array $channels, callable $callback)
+    public function subscribe(array $channels, callable $callback) : LoopInterface
     {
         $socket = $this->context->getSocket(ZMQ::SOCKET_SUB);
 
@@ -176,11 +178,11 @@ class Connection
      *
      * @param  string    $message
      * @param  callable  $callback
-     * @param  \React\ZMQ\SocketWrapper $socket
+     * @param  \React\ZMQ\SocketWrapper|null $socket
      *
      * @return void
      */
-    protected function onSuccess($message, callable $callback, Socket $socket)
+    protected function onSuccess($message, callable $callback, Socket $socket) : void
     {
         if ($callback($message) === false) {
             if (! $socket->closed) {
@@ -196,7 +198,7 @@ class Connection
      *
      * @return string
      */
-    protected function formatMessage($message)
+    protected function formatMessage($message) : string
     {
         return is_array($message) || is_object($message) ?
             json_encode($message) : $message;
@@ -207,7 +209,7 @@ class Connection
      *
      * @return string
      */
-    protected function getDsn()
+    protected function getDsn() : string
     {
         $protocol = $this->config['protocol'] ?? 'tcp';
 
