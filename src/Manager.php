@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Denpa\ZeroMQ;
 
 use React\ZMQ\Context;
-use Denpa\ZeroMQ\Connection;
 use InvalidArgumentException;
 use React\EventLoop\LoopInterface;
 use React\EventLoop\Factory as EventLoop;
