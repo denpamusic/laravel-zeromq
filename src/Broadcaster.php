@@ -33,7 +33,7 @@ class Broadcaster extends IlluminateBroadcaster
      *
      * @return void
      */
-    public function __construct(ZeroMQ $zeromq, $connection = null)
+    public function __construct(ZeroMQ $zeromq, ?string $connection = null)
     {
         $this->zeromq = $zeromq;
         $this->connection = $connection;

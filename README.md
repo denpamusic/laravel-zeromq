@@ -34,7 +34,7 @@ composer require denpa/laravel-zeromq "^1.0"
 `php artisan vendor:publish --provider="Denpa\ZeroMQ\Providers\ServiceProvider"` in your project directory.
 
 ## Requirements
-* PHP 7.0 or higher
+* PHP 7.1 or higher
 * ZMQ PHP extension
 * Laravel 5.1 or higher
 

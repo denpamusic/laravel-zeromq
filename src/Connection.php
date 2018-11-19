@@ -182,7 +182,7 @@ class Connection
      *
      * @return void
      */
-    protected function onSuccess($message, callable $callback, Socket $socket) : void
+    protected function onSuccess(string $message, callable $callback, ?Socket $socket) : void
     {
         if ($callback($message) === false) {
             if (! $socket->closed) {
