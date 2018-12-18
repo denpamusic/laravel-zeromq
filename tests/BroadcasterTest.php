@@ -5,7 +5,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class BroadcasterTest extends TestCase
 {
-    protected function setUp()
+    /**
+     * Set-up test environment.
+     *
+     * @return void
+     */
+    public function setUp()
     {
         parent::setUp();
 
