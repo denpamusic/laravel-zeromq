@@ -6,6 +6,25 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class BroadcasterTest extends TestCase
 {
     /**
+     * Makes test channel name.
+     *
+     * @param  string  $name
+     * @param  string  $args,...
+     *
+     * @return string
+     */
+    protected function makeChannelName($name, ...$args)
+    {
+        if ($this->laravelVersion('5.3')) {
+            $callback = function ($arg) { return '*'; };
+        } else {
+            $callback = function ($arg) { return "{{$arg}}"; };
+        }
+
+        return "$name." . implode('.', array_map($callback, $args));
+    }
+
+    /**
      * Set-up test environment.
      *
      * @return void
@@ -22,12 +41,16 @@ class BroadcasterTest extends TestCase
 
         $broadcast = $this->app['Illuminate\Broadcasting\BroadcastManager'];
         $broadcast->routes();
-        $broadcast->channel('test1.{user_id}', function ($user, $user_id) {
-            return $user->id == $user_id;
-        });
-        $broadcast->channel('test2.{user_id}', function ($user, $user_id) {
-            return ['foo' => 'bar'];
-        });
+        $broadcast->channel($this->makeChannelName('test1', 'user_id'),
+            function ($user, $user_id) {
+                return $user->id == $user_id;
+            }
+        );
+        $broadcast->channel($this->makeChannelName('test2', 'user_id'),
+            function ($user, $user_id) {
+                return ['foo' => 'bar'];
+            }
+        );
     }
 
     /**
@@ -92,8 +115,8 @@ class BroadcasterTest extends TestCase
      */
     public function testAuthForbidden()
     {
-        $this->post('/broadcasting/auth', ['channel_name' => 'private-test1.1'])
-            ->assertStatus(403);
+        $response = $this->post('/broadcasting/auth', ['channel_name' => 'private-test1.1']);
+        $this->assertStatus($response, 403);
     }
 
     /**
@@ -103,10 +126,11 @@ class BroadcasterTest extends TestCase
      */
     public function testAuthWithBoolResponse()
     {
-        $this->actingAs(new FakeUser())
-            ->post('/broadcasting/auth', ['channel_name' => 'private-test1.1'])
-            ->assertStatus(200)
-            ->assertSee('true');
+        $response = $this->actingAs(new FakeUser())
+            ->post('/broadcasting/auth', ['channel_name' => 'private-test1.1']);
+
+        $this->assertStatus($response, 200);
+        $this->assertSee($response, 'true');
     }
 
     /**
@@ -116,13 +140,14 @@ class BroadcasterTest extends TestCase
      */
     public function testAuthWithJsonResponse()
     {
-        $this->actingAs(new FakeUser())
-            ->post('/broadcasting/auth', ['channel_name' => 'private-test2.1'])
-            ->assertStatus(200)
-            ->assertJson(['channel_data' => [
-                'user_id' => 1,
-                'user_info' => ['foo' => 'bar'],
-            ]]);
+        $response = $this->actingAs(new FakeUser())
+            ->post('/broadcasting/auth', ['channel_name' => 'private-test2.1']);
+
+        $this->assertStatus($response, 200);
+        $this->assertJsonEquals($response, ['channel_data' => [
+            'user_id' => 1,
+            'user_info' => ['foo' => 'bar'],
+        ]]);
     }
 }
 

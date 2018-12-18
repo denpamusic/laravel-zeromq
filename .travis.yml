@@ -9,8 +9,8 @@ php:
   - nightly
   
 env:
-# Laravel 5.2.*
-  - ILLUMINATE_VERSION=5.2.* PHPUNIT_VERSION=~5.0
+# Laravel 5.3.*
+  - ILLUMINATE_VERSION=5.3.* PHPUNIT_VERSION=~5.0
 
 before_script:
   - echo "yes" | pecl -d preferred_state=beta install zmq
@@ -29,15 +29,6 @@ script:
 
 matrix:
   include:
-# Laravel 5.3.*
-    - php: 7.1
-      env: ILLUMINATE_VERSION=5.3.* PHPUNIT_VERSION=~5.0
-    - php: 7.2
-      env: ILLUMINATE_VERSION=5.3.* PHPUNIT_VERSION=~5.0
-    - php: 7.3
-      env: ILLUMINATE_VERSION=5.3.* PHPUNIT_VERSION=~5.0
-    - php: nightly
-      env: ILLUMINATE_VERSION=5.3.* PHPUNIT_VERSION=~5.0
 # Laravel 5.4.*
     - php: 7.1
       env: ILLUMINATE_VERSION=5.4.* PHPUNIT_VERSION=~5.7

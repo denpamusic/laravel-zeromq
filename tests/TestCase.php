@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Str;
 use Denpa\ZeroMQ\Providers\ServiceProvider;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 
@@ -49,6 +50,69 @@ abstract class TestCase extends OrchestraTestCase
                 'port'     => 8443,
             ],
         ]);
+    }
+
+    /**
+     * Polyfill for asserting response status for laravel 5.2 or higher.
+     *
+     * @param  Response  $response
+     * @param  int       $code
+     *
+     * @return void
+     */
+    protected function assertStatus($response, $code = 200)
+    {
+        if (method_exists($response, 'assertResponseStatus')) {
+            return $response->assertResponseStatus($code);
+        }
+
+        return $response->assertStatus($code);
+    }
+
+    /**
+     * Polyfill for asserting content for laravel 5.2 or higher.
+     *
+     * @param  Response  $response
+     * @param  string    $content
+     *
+     * @return void
+     */
+    protected function assertSee($response, $content)
+    {
+        if (method_exists($response, 'see')) {
+            return $response->see($content);
+        }
+
+        return $response->assertSee($content);
+    }
+
+    /**
+     * Polyfill for asserting json content for laravel 5.2 or higher.
+     *
+     * @param  Response  $response
+     * @param  array     $json
+     *
+     * @return void
+     */
+    protected function assertJsonEquals($response, array $json)
+    {
+        if (method_exists($response, 'seeJsonEquals')) {
+            return $response->seeJsonEquals($json);
+        }
+
+        return $response->assertJson($json);
+    }
+
+    /**
+     * Checks for laravel version.
+     *
+     * @param  mixed  $versions
+     *
+     * @return bool
+     */
+    protected function laravelVersion($versions)
+    {
+        return Str::startsWith($this->app::VERSION, $versions);
     }
 
     /**
