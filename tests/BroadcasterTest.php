@@ -16,12 +16,16 @@ class BroadcasterTest extends TestCase
     protected function makeChannelName($name, ...$args)
     {
         if ($this->laravelVersion('5.3')) {
-            $callback = function ($arg) { return '*'; };
+            $callback = function ($arg) {
+                return '*';
+            };
         } else {
-            $callback = function ($arg) { return "{{$arg}}"; };
+            $callback = function ($arg) {
+                return "{{$arg}}";
+            };
         }
 
-        return "$name." . implode('.', array_map($callback, $args));
+        return "$name.".implode('.', array_map($callback, $args));
     }
 
     /**
