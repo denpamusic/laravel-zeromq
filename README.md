@@ -36,7 +36,7 @@ composer require denpa/laravel-zeromq "^1.0"
 ## Requirements
 * PHP 7.1 or higher
 * ZMQ PHP extension
-* Laravel 5.1 or higher
+* Laravel 5.2 or higher
 
 ## Usage
 Publish:
