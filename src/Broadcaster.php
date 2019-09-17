@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Denpa\ZeroMQ;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Denpa\ZeroMQ\Manager as ZeroMQ;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -98,7 +99,7 @@ class Broadcaster extends IlluminateBroadcaster
         $payload = json_encode([
             'event'  => $event,
             'data'   => $payload,
-            'socket' => array_pull($payload, 'socket'),
+            'socket' => Arr::pull($payload, 'socket'),
         ]);
 
         $connection->publish($this->formatChannels($channels), $payload)->run();
