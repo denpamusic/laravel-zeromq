@@ -10,7 +10,7 @@ if (! function_exists('zeromq')) {
      *
      * @return \Denpa\ZeroMQ\Manager
      */
-    function zeromq() : Manager
+    function zeromq(): Manager
     {
         return app('zeromq');
     }

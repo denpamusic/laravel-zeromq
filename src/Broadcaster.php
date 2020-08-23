@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Denpa\ZeroMQ;
 
+use Denpa\ZeroMQ\Manager as ZeroMQ;
+use Illuminate\Broadcasting\Broadcasters\Broadcaster as IlluminateBroadcaster;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
-use Denpa\ZeroMQ\Manager as ZeroMQ;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Illuminate\Broadcasting\Broadcasters\Broadcaster as IlluminateBroadcaster;
 
 class Broadcaster extends IlluminateBroadcaster
 {
@@ -71,7 +71,7 @@ class Broadcaster extends IlluminateBroadcaster
      *
      * @return string
      */
-    public function validAuthenticationResponse($request, $result) : string
+    public function validAuthenticationResponse($request, $result): string
     {
         if (is_bool($result)) {
             return json_encode($result);
@@ -92,7 +92,7 @@ class Broadcaster extends IlluminateBroadcaster
      *
      * @return void
      */
-    public function broadcast(array $channels, $event, array $payload = []) : void
+    public function broadcast(array $channels, $event, array $payload = []): void
     {
         $connection = $this->zeromq->connection($this->connection);
 

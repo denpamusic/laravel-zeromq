@@ -1,7 +1,7 @@
 <?php
 
-use Denpa\ZeroMQ\Manager;
 use Denpa\ZeroMQ\Connection;
+use Denpa\ZeroMQ\Manager;
 
 class ProviderTest extends TestCase
 {

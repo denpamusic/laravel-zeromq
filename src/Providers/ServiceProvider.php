@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Denpa\ZeroMQ\Providers;
 
-use Denpa\ZeroMQ\Manager;
 use Denpa\ZeroMQ\Broadcaster;
+use Denpa\ZeroMQ\Manager;
 use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
 
 class ServiceProvider extends IlluminateServiceProvider
@@ -15,7 +15,7 @@ class ServiceProvider extends IlluminateServiceProvider
      *
      * @return void
      */
-    public function boot() : void
+    public function boot(): void
     {
         $path = realpath(__DIR__.'/../../config/config.php');
 
@@ -33,7 +33,7 @@ class ServiceProvider extends IlluminateServiceProvider
      *
      * @return void
      */
-    public function register() : void
+    public function register(): void
     {
         $this->registerAliases();
 
@@ -46,7 +46,7 @@ class ServiceProvider extends IlluminateServiceProvider
      *
      * @return void
      */
-    protected function registerAliases() : void
+    protected function registerAliases(): void
     {
         $aliases = [
             'zeromq'            => 'Denpa\ZeroMQ\Manager',
@@ -65,7 +65,7 @@ class ServiceProvider extends IlluminateServiceProvider
      *
      * @return void
      */
-    public function registerManager() : void
+    public function registerManager(): void
     {
         $this->app->singleton('zeromq', function ($app) {
             return new Manager(config('zeromq.connections'));
@@ -77,7 +77,7 @@ class ServiceProvider extends IlluminateServiceProvider
      *
      * @return void
      */
-    public function registerConnection() : void
+    public function registerConnection(): void
     {
         $this->app->bind('zeromq.connection', function ($app) {
             return $app['zeromq']->connection();

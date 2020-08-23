@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Denpa\ZeroMQ;
 
-use React\ZMQ\Context;
 use InvalidArgumentException;
-use React\EventLoop\LoopInterface;
 use React\EventLoop\Factory as EventLoop;
+use React\EventLoop\LoopInterface;
+use React\ZMQ\Context;
 
 class Manager
 {
@@ -71,7 +71,7 @@ class Manager
      *
      * @return self
      */
-    public function setLoop(LoopInterface $loop) : self
+    public function setLoop(LoopInterface $loop): self
     {
         $this->loop = $loop;
 
@@ -85,7 +85,7 @@ class Manager
      *
      * @return \Denpa\ZeroMQ\Connection
      */
-    public function connection(?string $name = null) : Connection
+    public function connection(?string $name = null): Connection
     {
         $name = $name ?: 'default';
 
@@ -103,7 +103,7 @@ class Manager
      *
      * @return \Denpa\ZeroMQ\Connection
      */
-    public function resolve(?string $name = null) : Connection
+    public function resolve(?string $name = null): Connection
     {
         $name = $name ?: 'default';
 
@@ -123,7 +123,7 @@ class Manager
      *
      * @return \Denpa\ZeroMQ\Connection
      */
-    public function make(array $config) : Connection
+    public function make(array $config): Connection
     {
         return new Connection(new Context($this->loop), $this->loop, $config);
     }
@@ -133,7 +133,7 @@ class Manager
      *
      * @return void
      */
-    public function run() : void
+    public function run(): void
     {
         $this->loop->run();
     }
@@ -143,7 +143,7 @@ class Manager
      *
      * @return void
      */
-    public function stop() : void
+    public function stop(): void
     {
         $this->loop->stop();
         $this->stopped = true;
