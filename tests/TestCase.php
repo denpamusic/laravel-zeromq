@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Support\Str;
 use Denpa\ZeroMQ\Providers\ServiceProvider;
+use Illuminate\Support\Str;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 
 abstract class TestCase extends OrchestraTestCase

@@ -1,8 +1,8 @@
 <?php
 
-use React\ZMQ\Context;
-use Denpa\ZeroMQ\Manager;
 use Denpa\ZeroMQ\Connection;
+use Denpa\ZeroMQ\Manager;
+use React\ZMQ\Context;
 
 class ManagerTest extends TestCase
 {
