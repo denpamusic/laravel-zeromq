@@ -10,7 +10,6 @@ abstract class TestCase extends OrchestraTestCase
      * Get package providers.
      *
      * @param  \Illuminate\Foundation\Application  $app
-     *
      * @return array
      */
     protected function getPackageProviders($app)
@@ -24,7 +23,6 @@ abstract class TestCase extends OrchestraTestCase
      * Get package aliases.
      *
      * @param  \Illuminate\Foundation\Application  $app
-     *
      * @return array
      */
     protected function getPackageAliases($app)
@@ -38,7 +36,6 @@ abstract class TestCase extends OrchestraTestCase
      * Define environment setup.
      *
      * @param  \Illuminate\Foundation\Application  $app
-     *
      * @return void
      */
     protected function getEnvironmentSetUp($app)
@@ -56,8 +53,7 @@ abstract class TestCase extends OrchestraTestCase
      * Polyfill for asserting response status for laravel 5.2 or higher.
      *
      * @param  Response  $response
-     * @param  int       $code
-     *
+     * @param  int  $code
      * @return void
      */
     protected function assertStatus($response, $code = 200)
@@ -73,8 +69,7 @@ abstract class TestCase extends OrchestraTestCase
      * Polyfill for asserting content for laravel 5.2 or higher.
      *
      * @param  Response  $response
-     * @param  string    $content
-     *
+     * @param  string  $content
      * @return void
      */
     protected function assertSee($response, $content)
@@ -90,8 +85,7 @@ abstract class TestCase extends OrchestraTestCase
      * Polyfill for asserting json content for laravel 5.2 or higher.
      *
      * @param  Response  $response
-     * @param  array     $json
-     *
+     * @param  array  $json
      * @return void
      */
     protected function assertJsonEquals($response, array $json)
@@ -107,7 +101,6 @@ abstract class TestCase extends OrchestraTestCase
      * Checks for laravel version.
      *
      * @param  mixed  $versions
-     *
      * @return bool
      */
     protected function laravelVersion($versions)
@@ -121,7 +114,6 @@ abstract class TestCase extends OrchestraTestCase
      * @param  array  $with
      * @param  PHPUnit_Framework_MockObject_Matcher_InvokedCount|null  $expects
      * @param  PHPUnit_Framework_MockObject_Stub_Return|null  $return
-     *
      * @return callable
      */
     protected function mockCallable(

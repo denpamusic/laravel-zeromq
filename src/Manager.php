@@ -43,7 +43,6 @@ class Manager
      * Creates new ZeroMQ manager instance.
      *
      * @param  array  $config
-     *
      * @return void
      */
     public function __construct(array $config)
@@ -68,7 +67,6 @@ class Manager
      * Sets event loop.
      *
      * @param  \React\EventLoop\LoopInterface  $loop
-     *
      * @return self
      */
     public function setLoop(LoopInterface $loop): self
@@ -82,7 +80,6 @@ class Manager
      * Gets ZeroMQ connection by name.
      *
      * @param  string|null  $name
-     *
      * @return \Denpa\ZeroMQ\Connection
      */
     public function connection(?string $name = null): Connection
@@ -99,8 +96,7 @@ class Manager
     /**
      * Resolve the given connection by name.
      *
-     * @param string|null $name
-     *
+     * @param  string|null  $name
      * @return \Denpa\ZeroMQ\Connection
      */
     public function resolve(?string $name = null): Connection
@@ -120,7 +116,6 @@ class Manager
      * Creates new ZeroMQ connection.
      *
      * @param  array  $config
-     *
      * @return \Denpa\ZeroMQ\Connection
      */
     public function make(array $config): Connection
@@ -153,8 +148,7 @@ class Manager
      * Pass methods onto the default connection.
      *
      * @param  string  $method
-     * @param  array   $parameters
-     *
+     * @param  array  $parameters
      * @return mixed
      */
     public function __call(string $method, array $parameters)

@@ -31,7 +31,6 @@ class Broadcaster extends IlluminateBroadcaster
      *
      * @param  \Denpa\ZeroMQ\Manager  $manager
      * @param  string|null  $connection
-     *
      * @return void
      */
     public function __construct(ZeroMQ $zeromq, ?string $connection = null)
@@ -44,7 +43,6 @@ class Broadcaster extends IlluminateBroadcaster
      * Authenticate the incoming request for a given channel.
      *
      * @param  \Illuminate\Http\Request  $request
-     *
      * @return mixed
      */
     public function auth($request)
@@ -68,7 +66,6 @@ class Broadcaster extends IlluminateBroadcaster
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  mixed  $result
-     *
      * @return string
      */
     public function validAuthenticationResponse($request, $result): string
@@ -86,10 +83,9 @@ class Broadcaster extends IlluminateBroadcaster
     /**
      * Broadcasts payload to channels.
      *
-     * @param  array   $channels
+     * @param  array  $channels
      * @param  string  $event
-     * @param  array   $payload
-     *
+     * @param  array  $payload
      * @return void
      */
     public function broadcast(array $channels, $event, array $payload = []): void

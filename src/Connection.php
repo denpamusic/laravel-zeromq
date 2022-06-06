@@ -28,10 +28,9 @@ class Connection
     /**
      * Constructs new ZMQ connection.
      *
-     * @param  \React\ZMQ\Context              $context
+     * @param  \React\ZMQ\Context  $context
      * @param  \React\EventLoop\LoopInterface  $loop
-     * @param  array                           $config
-     *
+     * @param  array  $config
      * @return void
      */
     public function __construct(
@@ -48,8 +47,7 @@ class Connection
      * Proxies call to the context.
      *
      * @param  string  $method
-     * @param  array   $parameters
-     *
+     * @param  array  $parameters
      * @return mixed
      */
     public function __call($method, array $parameters = [])
@@ -61,7 +59,6 @@ class Connection
      * Sets ZeroMQ context.
      *
      * @param  \React\ZMQ\Context  $context
-     *
      * @return self
      */
     public function setContext(Context $context): self
@@ -86,7 +83,6 @@ class Connection
      *
      * @param  array  $channels
      * @param  mixed  $message
-     *
      * @return \React\EventLoop\LoopInterface
      */
     public function publish(array $channels, $message): LoopInterface
@@ -108,7 +104,6 @@ class Connection
      * Pulls message.
      *
      * @param  callable  $callback
-     *
      * @return \React\EventLoop\LoopInterface
      */
     public function pull(callable $callback): LoopInterface
@@ -130,7 +125,6 @@ class Connection
      * Pushes message.
      *
      * @param  mixed  $message
-     *
      * @return \React\EventLoop\LoopInterface
      */
     public function push($message): LoopInterface
@@ -148,9 +142,8 @@ class Connection
     /**
      * Subscribes to channels.
      *
-     * @param  array     $channels
+     * @param  array  $channels
      * @param  callable  $callback
-     *
      * @return \React\EventLoop\LoopInterface
      */
     public function subscribe(array $channels, callable $callback): LoopInterface
@@ -176,10 +169,9 @@ class Connection
     /**
      * Success callback.
      *
-     * @param  string    $message
+     * @param  string  $message
      * @param  callable  $callback
-     * @param  \React\ZMQ\SocketWrapper|null $socket
-     *
+     * @param  \React\ZMQ\SocketWrapper|null  $socket
      * @return void
      */
     protected function onSuccess(string $message, callable $callback, ?Socket $socket): void
@@ -195,7 +187,6 @@ class Connection
      * Formats message.
      *
      * @param  mixed  $message
-     *
      * @return string
      */
     protected function formatMessage($message): string
