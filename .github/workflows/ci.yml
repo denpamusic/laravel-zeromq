@@ -18,13 +18,13 @@ jobs:
       uses: shivammathur/setup-php@v2
       with:
         php-version: ${{ matrix.php-version }}
-        tools: composer, pecl
+        tools: composer
+        extensions: zmq-beta
       env:
         COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Install dependencies
       run: |
-        pecl install zmq-beta
         composer self-update
         composer install --prefer-source --no-interaction
 
