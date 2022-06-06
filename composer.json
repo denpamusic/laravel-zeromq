@@ -17,7 +17,7 @@
         "react/zmq": "^0.4.0"
     },
     "require-dev": {
-        "orchestra/testbench": "7.x"
+        "orchestra/testbench": "6.x"
     },
     "autoload": {
         "psr-4" : {
