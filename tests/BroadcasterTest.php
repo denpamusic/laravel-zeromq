@@ -10,7 +10,6 @@ class BroadcasterTest extends TestCase
      *
      * @param  string  $name
      * @param  string  $args,...
-     *
      * @return string
      */
     protected function makeChannelName($name, ...$args)
