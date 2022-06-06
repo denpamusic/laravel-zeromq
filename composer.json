@@ -8,7 +8,7 @@
     "authors": [
         {
             "name": "Denis Paavilainen",
-            "email": "denpa@netfleet.space",
+            "email": "denpa@denpa.pro",
             "role": "Developer"
         }
     ],
@@ -17,7 +17,7 @@
         "react/zmq": "^0.4.0"
     },
     "require-dev": {
-        "orchestra/testbench": "~3.0 | 4.x | 5.x"
+        "orchestra/testbench": "7.x"
     },
     "autoload": {
         "psr-4" : {
